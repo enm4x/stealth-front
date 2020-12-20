@@ -2,11 +2,12 @@ import React from 'react';
 import { Component } from 'react';
 import './App.css';
 import { w3cwebsocket as W3CWebSocket} from "websocket";
+import Conversation from './Conversation'
 
 const client = new W3CWebSocket('ws://localhost:8088/ws');
 
 
-class Chat extends Component {
+class Input extends Component {
 
   constructor(props) {
     super(props);
@@ -41,15 +42,15 @@ class Chat extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Userconnection-form">
         { 
           this.state.showRegistration ? (
-          <form className="Userconnection" onSubmit={this.userRegistration}>
+          <form  onSubmit={this.userRegistration}>
             <input name="username" type="text" placeholder="Username"></input>
             <button type="submit">Connection</button>  
           </form>
         ):(
-        <form className="Messaging" onSubmit={this.sendMessage}>
+        <form className="Messaging-form" onSubmit={this.sendMessage}>
           <input value={this.state.msg} onChange={this.handleChange} name="body" type="text" placeholder="Message"></input>
           <button type="submit">Send your message</button>  
         </form>
@@ -60,9 +61,8 @@ class Chat extends Component {
   }
 
 }
-
-class App extends Component {
-
+class Messages extends Component {
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -85,28 +85,39 @@ class App extends Component {
       // console.log("print array messages : ", this.state.messages)
     };
   }
-  
 
-  
+  render() {
+    return(
+      <div className="Messagebox">
+      {this.state.messages.map( (message, i) => (
+        <div className="Messagecontainer " key={i}>
+            <p className="NMUsername">{message.user}</p>
+            <p className="Newmessage">{message.body}</p>
+        </div> 
+      ))}
+      </div>
+    )
+  }
+
+}
+class App extends Component {
+
   render() {
     return (
       <div className="App">
-        <div className="App-body">
-        <h1>Stealth</h1>
-        <h2>real time encrypted chat</h2>
-          <div className="messagecontainer">
-          {this.state.messages.map( (message, i) => (
-            <div className="container darker" key={i}>
-                <p className="NMUsername">user: {message.user}</p>
-                <p className="Newmessage">{message.body}</p>
-            </div> 
-          ))}
-          </div>
-          <div className="inputcontainer">
-          <Chat />
-          </div>
+        <div className="global-container">
+            <div className="Side-bar-left">
+            <header>
+              <h1>Stealth</h1>
+            </header>
+            <Conversation />
+            </div>
+            <div className="Chat-body-right">
+              <Messages />
+              <Input />
+            </div>
         </div>  
-        </div>
+      </div>
     );
   }
 }

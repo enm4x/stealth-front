@@ -35,7 +35,7 @@ class Conversation extends Component {
 
     render(){
         return(
-            <div>
+            <div className="Conversations-container">
                 {this.state.conversations.map( (conversations, i) => (
                     <div className="Conversation-box" key={i}>
                         <p className="Conversation-username">{conversations.user}</p>

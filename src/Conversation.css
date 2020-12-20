@@ -6,6 +6,25 @@
     height: 100%;
     background-color: #434C5E;
     border-radius: 10px 0 0 10px;
+  }
+
+  header {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  header h1 {
+    margin: 0 auto;
+    color: #ECEFF4;
+    font-size: calc(10px + 2vmin);
+  }
+
+  .Conversations-container {
+    height: 100%;
+    width: 100;
     overflow: hidden;
     overflow-y: auto;
   }
@@ -14,34 +33,33 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
     min-height: 80px;
+
 }
 
 .Conversation-username {
+    margin-left: 15px;
     color: #D8DEE9;
-    margin-right: 15px;
-    font-size: calc(10px + 2vmin);
+    font-size: calc(8px + 1vmin);
 }
 
 .Avatar {
     display: flex;
-    min-width: 10vh;
-    min-height: 10vh;
-    height: 100%;
-    background-color: white;
+    min-width: 8vh;
+    min-height: 8vh;
     border-radius: 50%;
+    background-color: white;
     border: 2px solid lightcoral;
-    margin: 15px;
-
+    margin: 10px;
 }
 
 .Avatar img {
     margin: auto;
     display: block;
-    height: 45px;
-    width: 45px;
+    height: 5vh;
+    width: 5vh;
 }
 
 .Conversation-box:hover {

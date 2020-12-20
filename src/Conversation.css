@@ -1,0 +1,36 @@
+.Side-bar-left {
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+    width: 30%;
+    height: 100%;
+    background-color: #434C5E;
+    border-radius: 10px 0 0 10px;
+  }
+
+.Conversation-box {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+avatar {
+    display: block;
+    width: 65px;
+    height: 65px;
+    border-radius: 65px;
+    background-color: white;
+    text-align: center;
+    border: 1px solid #434C5E;
+}
+
+.avatar img {
+    height: auto;
+    margin-top: 15px;
+}
+
+.Conversation-box:hover {
+    border-top: 1px solid #D8DEE9;
+    border-bottom: 1px solid #D8DEE9;
+}

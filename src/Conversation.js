@@ -16,6 +16,18 @@ class Conversation extends Component {
               {
                 user: "Pierre",
                 logo:  "" 
+              },
+              {
+                user: "Alice",
+                logo:  "" 
+              },
+              {
+                user: "Bob",
+                logo:  "" 
+              },
+              {
+                user: "Louis",
+                logo:  "" 
               }
           ],
         }
@@ -26,10 +38,10 @@ class Conversation extends Component {
             <div>
                 {this.state.conversations.map( (conversations, i) => (
                     <div className="Conversation-box" key={i}>
-                        <p className="">user: {conversations.user}</p>
-                        <avatar>
-                        <img src={Defaultlogo} width="50" height="50"/>
-                        </avatar>
+                        <p className="Conversation-username">{conversations.user}</p>
+                        <div className="Avatar">
+                            <img src={Defaultlogo}  className="userAvatar" alt="DefaultLogo"/>
+                        </div>
                         </div> 
                 ))}
         </div>

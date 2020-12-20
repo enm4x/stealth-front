@@ -3,6 +3,11 @@ import { Component } from 'react';
 import './App.css';
 import { w3cwebsocket as W3CWebSocket} from "websocket";
 import Conversation from './Conversation'
+var crypto = require('crypto');
+// On définit notre algorithme de cryptage
+var algorithm = 'aes256';
+// Notre clé de chiffrement, elle est souvent générée aléatoirement mais elle doit être la même pour le décryptage
+var password = 'l5JmP+G0/1zB%;r8B8?2?2pcqGcL^3';
 
 const client = new W3CWebSocket('ws://localhost:8088/ws');
 
@@ -23,6 +28,12 @@ class Input extends Component {
     let user = event.target.username.value
     this.setState({username: user})
     let body = " has joined the chat"
+    var bodyString = String(body);
+    // On crypte notre texte
+    var cipher = crypto.createCipher(algorithm,password);
+    var crypted = cipher.update(bodyString,'utf8','hex');
+    crypted += cipher.final('hex');
+    body = crypted;
     client.send(JSON.stringify({user, body}))
     this.setState({showRegistration: false})
   }
@@ -31,6 +42,13 @@ class Input extends Component {
     event.preventDefault()
     const user = this.state.username
     let body = event.target.body.value;
+    var bodyString = String(body);
+    // On crypte notre texte
+    var cipher = crypto.createCipher(algorithm,password);
+    var crypted = cipher.update(bodyString,'utf8','hex');
+    crypted += cipher.final('hex');
+    body = crypted;
+    console.log(crypted)
     client.send(JSON.stringify({user, body}))
     this.setState({msg: ''})
   }
@@ -80,7 +98,13 @@ class Messages extends Component {
       const {user, body} = JSON.parse(message.data)
       console.log("new message received", user, body);
       const messages = this.state.messages.slice();
-      messages.push({user, body});
+      // On décrypte notre texte
+      var bodyString = String(body);
+      var decipher = crypto.createDecipher(algorithm,password);
+      var dec = decipher.update(bodyString,'hex','utf8');
+      dec += decipher.final('utf8');
+      console.log(dec);
+      messages.push({user, dec});
       this.setState({messages: messages})
       // console.log("print array messages : ", this.state.messages)
     };
@@ -92,7 +116,7 @@ class Messages extends Component {
       {this.state.messages.map( (message, i) => (
         <div className="Messagecontainer " key={i}>
             <p className="NMUsername">{message.user}</p>
-            <p className="Newmessage">{message.body}</p>
+            <p className="Newmessage">{message.dec}</p>
         </div> 
       ))}
       </div>

@@ -1,16 +1,15 @@
 import React from 'react';
 import { Component } from 'react';
+import { crypto } from 'crypto';
+
+import Conversation from './Conversation';
+import { Client } from './Websocket';
 import './App.css';
-import { w3cwebsocket as W3CWebSocket} from "websocket";
-import Conversation from './Conversation'
-var crypto = require('crypto');
+
 // On définit notre algorithme de cryptage
 var algorithm = 'aes256';
 // Notre clé de chiffrement, elle est souvent générée aléatoirement mais elle doit être la même pour le décryptage
 var password = 'l5JmP+G0/1zB%;r8B8?2?2pcqGcL^3';
-
-const client = new W3CWebSocket('ws://localhost:8088/ws');
-
 
 class Input extends Component {
 
@@ -34,7 +33,7 @@ class Input extends Component {
     var crypted = cipher.update(bodyString,'utf8','hex');
     crypted += cipher.final('hex');
     body = crypted;
-    client.send(JSON.stringify({user, body}))
+    Client.send(JSON.stringify({user, body}))
     this.setState({showRegistration: false})
   }
 
@@ -49,7 +48,7 @@ class Input extends Component {
     crypted += cipher.final('hex');
     body = crypted;
     console.log(crypted)
-    client.send(JSON.stringify({user, body}))
+    Client.send(JSON.stringify({user, body}))
     this.setState({msg: ''})
   }
 
@@ -91,10 +90,10 @@ class Messages extends Component {
   }
 
   componentDidMount() {
-    client.onopen = () => {
+    Client.onopen = () => {
       console.log('WebSocket Client Connected');
     }; 
-    client.onmessage = (message) => {
+    Client.onmessage = (message) => {
       const {user, body} = JSON.parse(message.data)
       console.log("new message received", user, body);
       const messages = this.state.messages.slice();

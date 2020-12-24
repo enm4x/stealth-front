@@ -69,14 +69,34 @@
   padding: 15px;
 }
 
-.Newmessage {
+.message-sent {
   padding: 15px;
   margin-right: 5px;
+  border-radius: 10px;
+  background-color: #8fbcbb;
+  color: white;
+  text-align: right;
+}
+
+.message-received-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: auto;
+}
+
+.message-received-username {
+  text-align: right;
+  padding: 15px;
+}
+
+.message-received {
+  padding: 15px;
+  margin-left: 5px;
   border-radius: 10px;
   background-color: #5E81AC;
   color: white;
   text-align: right;
-
 }
 
 form {

@@ -17,7 +17,7 @@ class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "Username",
+      username: "",
       showRegistration: true,
       msg: ''
     }
@@ -45,6 +45,9 @@ class Input extends Component {
 
   sendMessage = (event) => {
     event.preventDefault()
+    if (event.target.body.value === "" ) {
+      console.log("error input empty")
+    }
     let userFrame = stealthFrame;
     userFrame.id = this.state.username
     userFrame.type = "message"
@@ -54,8 +57,7 @@ class Input extends Component {
   }
 
   handleChange = (event) => {
-      const value = event.currentTarget.value
-      this.setState({msg: value})
+      this.setState({msg: event.currentTarget.value})
   }
 
   render() {
@@ -89,8 +91,7 @@ class Messages extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: "",
-      messages: []
+      messages: [],
     }
   }
 
@@ -107,16 +108,18 @@ class Messages extends Component {
       console.log('WebSocket Client Connected');
     }; 
     Client.onmessage = (message) => {
-      let receivedFrame = stealthFrame;
-      receivedFrame = JSON.parse(message.data)
-
-      const body = this.decypher(receivedFrame);
-      const messages = this.state.messages.slice();
-      
-      let user = receivedFrame.id
-      messages.push({user, body});
-      this.setState({messages: messages})
-      // console.log("print array messages : ", this.state.messages)
+      console.log(message.data);
+      if ( message.data.type === "message"){
+        let receivedFrame = stealthFrame ;
+        receivedFrame = JSON.parse(message.data)
+  
+        const body = this.decypher(receivedFrame);
+        const messages = this.state.messages.slice();
+        
+        let user = receivedFrame.id
+        messages.push({user, body});
+        this.setState({messages: messages})
+      }
     };
   }
 

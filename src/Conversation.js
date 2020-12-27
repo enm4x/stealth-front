@@ -30,6 +30,7 @@ class Conversation extends Component {
                 logo:  "" 
               }
           ],
+          onlineuser: []
         }
       }
 
